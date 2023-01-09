@@ -1,0 +1,5 @@
+Adding Icon Styling with React
+https://fontawesome.com/docs/web/use-with/react/style
+
+All icons
+https://fontawesome.com/search?o=r&m=free
