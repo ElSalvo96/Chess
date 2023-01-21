@@ -10,7 +10,10 @@ describe('footer component', () => {
     const Name = screen.getByText('Fabio Salvini', { exact: true });
     expect(footer).toContainElement(PoweredBy);
     expect(PoweredBy).toContainElement(Name);
-    expect(Name).toHaveAttribute('href');
+    expect(Name).toHaveAttribute(
+      'href',
+      'https://www.linkedin.com/in/fabiosalvini/'
+    );
   });
   test('screen name of source code', () => {
     render(<Footer />);
@@ -21,7 +24,7 @@ describe('footer component', () => {
     let child = SourceCode.lastElementChild;
     expect(child).not.toBeNull();
     expect(child).toBeInTheDocument();
-    expect(child).toHaveAttribute('href');
+    expect(child).toHaveAttribute('href', 'https://github.com/ElSalvo96/Chess');
     // eslint-disable-next-line testing-library/no-node-access
     child = child!.lastElementChild;
     expect(child).toHaveAttribute('data-icon', 'github');
@@ -32,6 +35,9 @@ describe('footer component', () => {
     expect(footer).toBeInTheDocument();
     const Chessengine = screen.getByText('js-chess-engine', { exact: true });
     expect(footer).toContainElement(Chessengine);
-    expect(Chessengine).toHaveAttribute('href');
+    expect(Chessengine).toHaveAttribute(
+      'href',
+      'https://www.npmjs.com/package/js-chess-engine'
+    );
   });
 });
