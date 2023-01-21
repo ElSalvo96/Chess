@@ -3,41 +3,61 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 
 const searchCell = (cellId: string) => {
-  return screen.getByRole('generic', {
-    hidden: false,
-    description(accessibleDescription, element) {
-      return element.classList.contains(`cell-${cellId}`);
-    }
-  });
+  try {
+    return screen.getByRole('generic', {
+      hidden: false,
+      description(accessibleDescription, element) {
+        return element.classList.contains(`cell-${cellId}`);
+      }
+    });
+  } catch (error) {
+    console.log('searchCell', cellId);
+    throw error;
+  }
 };
 const searchImgName = (imgName: string) => {
-  return screen.queryAllByRole('img', {
-    hidden: true,
-    description(accessibleDescription, element) {
-      return element.getAttribute('data-icon') === imgName;
-    }
-  });
+  try {
+    return screen.queryAllByRole('img', {
+      hidden: true,
+      description(accessibleDescription, element) {
+        return element.getAttribute('data-icon') === imgName;
+      }
+    });
+  } catch (error) {
+    console.log('searchImgName', imgName);
+    throw error;
+  }
 };
 const searchPiece = (pieceName: string, color: 'white' | 'black') => {
-  const pieces = searchImgName(`chess-${pieceName}`);
-  return pieces.filter((piece) => {
-    const isWhite = piece.classList.contains('text-white');
-    if (isWhite && color === 'white') {
-      return true;
-    }
-    if (!isWhite && color !== 'white') {
-      return true;
-    }
-    return false;
-  });
+  try {
+    const pieces = searchImgName(`chess-${pieceName}`);
+    return pieces.filter((piece) => {
+      const isWhite = piece.classList.contains('text-white');
+      if (isWhite && color === 'white') {
+        return true;
+      }
+      if (!isWhite && color !== 'white') {
+        return true;
+      }
+      return false;
+    });
+  } catch (error) {
+    console.log('searchPiece', pieceName, color);
+    throw error;
+  }
 };
 
 const testPiece = (pieceName: string, numberOfPiece: number) => {
-  const white = searchPiece(pieceName, 'white');
-  expect(white).toHaveLength(numberOfPiece);
+  try {
+    const white = searchPiece(pieceName, 'white');
+    expect(white).toHaveLength(numberOfPiece);
 
-  const black = searchPiece(pieceName, 'black');
-  expect(black).toHaveLength(numberOfPiece);
+    const black = searchPiece(pieceName, 'black');
+    expect(black).toHaveLength(numberOfPiece);
+  } catch (error) {
+    console.log('testPiece', pieceName, numberOfPiece);
+    throw error;
+  }
 };
 
 describe('App component', () => {
