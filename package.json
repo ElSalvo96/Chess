@@ -1,6 +1,7 @@
 {
-  "name": "chess_private",
+  "name": "chess",
   "version": "0.1.0",
+  "homepage": "Chess",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
