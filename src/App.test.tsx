@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 import App from './App';
 
 const searchCell = (cellId: string) => {
@@ -87,8 +88,12 @@ describe('App component', () => {
       name: 'Start new game VS Ai'
     }); // Not initially selected
     expect(ButtonVSAi).toBeInTheDocument();
-    // After click the text of multiple component change
-    userEvent.click(ButtonVSAi);
+
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      // After click the text of multiple component change
+      userEvent.click(ButtonVSAi);
+    });
 
     // Test text change
     text = screen.getByText('You vs AI');
@@ -96,8 +101,11 @@ describe('App component', () => {
     expect(ButtonVsAnotherYou).toHaveTextContent('Start new game');
     expect(ButtonVSAi).toHaveTextContent('Reset game VS Ai');
 
-    // Another click
-    userEvent.click(ButtonVsAnotherYou);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      // Another click
+      userEvent.click(ButtonVsAnotherYou);
+    });
 
     text = screen.getByText('You vs another you');
     expect(text).toBeInTheDocument();
@@ -136,7 +144,10 @@ describe('App component', () => {
     let activeCircle = searchImgName('circle');
     expect(activeCircle).toHaveLength(0);
 
-    userEvent.click(pawn);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      userEvent.click(pawn);
+    });
     const possibleA3 = searchCell('A3');
     const possibleA4 = searchCell('A4');
 
@@ -160,27 +171,52 @@ describe('App component', () => {
     render(<App />);
     const pawnWhite = searchCell('B2');
     const pawnBlack = searchCell('A7');
-    // Move pawn white from B2 to B4
-    userEvent.click(pawnWhite);
-    const possibleB4 = searchCell('B4');
-    userEvent.click(possibleB4);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      // Move pawn white from B2 to B4
+      userEvent.click(pawnWhite);
+    });
 
-    // Move pawn black from A2 to A5
-    userEvent.click(pawnBlack);
+    const possibleB4 = searchCell('B4');
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      userEvent.click(possibleB4);
+    });
+
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      // Move pawn black from A2 to A5
+      userEvent.click(pawnBlack);
+    });
     let possibleA5 = searchCell('A5');
-    userEvent.click(possibleA5);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      userEvent.click(possibleA5);
+    });
 
     // Capture black from B4 to A5
-    userEvent.click(pawnWhite);
-    userEvent.click(pawnBlack);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      userEvent.click(pawnWhite);
+    });
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      userEvent.click(pawnBlack);
+    });
 
     expect(pawnWhite).toHaveClass('cell-A5');
     expect(pawnBlack).toHaveClass('DELETE');
 
     // Select black tower for capture white pawn
     const towerBlack = searchCell('A8');
-    userEvent.click(towerBlack);
-    userEvent.click(pawnWhite);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      userEvent.click(towerBlack);
+    });
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      userEvent.click(pawnWhite);
+    });
 
     expect(pawnWhite).toHaveClass('DELETE');
     expect(towerBlack).toHaveClass('cell-A5');
@@ -188,7 +224,10 @@ describe('App component', () => {
     const ButtonVsAnotherYou = screen.getByRole('button', {
       name: 'Reset game'
     });
-    userEvent.click(ButtonVsAnotherYou);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      userEvent.click(ButtonVsAnotherYou);
+    });
 
     expect(pawnWhite).toHaveClass('cell-B2');
     expect(pawnBlack).toHaveClass('cell-A7');
